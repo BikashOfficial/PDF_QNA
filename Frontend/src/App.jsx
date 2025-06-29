@@ -6,7 +6,7 @@ import ChatSection from './components/ChatSection';
 import GettingStarted from './components/GettingStarted';
 import FixedInput from './components/FixedInput';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+const SERVER_URL = import.meta.env.SERVER_URL;
 
 function App() {
   const [pdf, setPdf] = useState(null);
