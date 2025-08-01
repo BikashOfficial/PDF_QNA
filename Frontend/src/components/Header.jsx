@@ -1,12 +1,21 @@
 import React from 'react';
-import { FileText } from 'lucide-react';
+import { FileText, ArrowLeft } from 'lucide-react';
 
-const Header = ({ pdfUploaded, pdf, chatHistory, clearChat }) => (
+const Header = ({ pdfUploaded, pdf, chatHistory, clearChat, onReset }) => (
   <header className="bg-white/90 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-40 shadow-sm">
     <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 xl:px-8 py-3 sm:py-4">
       <div className="flex items-center justify-between">
         {/* Left Section */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+          {pdfUploaded && (
+            <button
+              onClick={onReset}
+              className="p-1.5 sm:p-2 bg-gray-100 hover:bg-gray-200 rounded-lg sm:rounded-xl transition-colors duration-200 mr-2"
+              title="Go back"
+            >
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-gray-600" />
+            </button>
+          )}
           <div className="p-1.5 sm:p-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg sm:rounded-xl shadow-lg shrink-0">
             <FileText className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
           </div>

@@ -6,7 +6,7 @@ import ChatSection from './components/ChatSection';
 import GettingStarted from './components/GettingStarted';
 import FixedInput from './components/FixedInput';
 
-const SERVER_URL = import.meta.env.SERVER_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 function App() {
   const [pdf, setPdf] = useState(null);
@@ -50,6 +50,15 @@ function App() {
     setChatHistory([]);
   };
 
+  const handleReset = () => {
+    setPdf(null);
+    setQuestion('');
+    setPdfUploaded(false);
+    setLoading(false);
+    setUploadProgress(0);
+    setChatHistory([]);
+  };
+
   const handleUpload = async () => {
     if (!pdf) {
       alert('Please select a PDF to upload!');
@@ -72,8 +81,7 @@ function App() {
     }, 200);
 
     try {
-      // Replace with your axios call
-      const response = await fetch(`${SERVER_URL}/upload`, {
+      const response = await fetch(`${API_URL}/upload`, {
         method: 'POST',
         body: formData
       });
@@ -111,7 +119,7 @@ function App() {
 
     try {
       // Replace with your axios call
-      const response = await fetch(`${SERVER_URL}/ask`, {
+      const response = await fetch(`${API_URL}/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +153,7 @@ function App() {
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex flex-col overflow-x-hidden">
       <SuccessPopup show={showSuccessPopup} onClose={() => setShowSuccessPopup(false)} />
-      <Header pdfUploaded={pdfUploaded} pdf={pdf} chatHistory={chatHistory} clearChat={clearChat} />
+      <Header pdfUploaded={pdfUploaded} pdf={pdf} chatHistory={chatHistory} clearChat={clearChat} onReset={handleReset} />
       <div className="flex-1 flex relative">
         <main className="flex-1 flex flex-col min-w-0">
           <div className="flex-1 overflow-y-auto">
@@ -171,6 +179,7 @@ function App() {
           )}
         </main>
       </div>
+      
       <style jsx>{`
         @keyframes blob {
           0% {
@@ -197,6 +206,7 @@ function App() {
         }
       `}</style>
     </div>
+    
   );
 }
 
